@@ -1,73 +1,68 @@
-let listOfColors = [];
-let randomNumberForBlock = [];
-let gameChosenColor;
-let userFoundTheColor = false;
-let userAtemptCount;
 
-setupTheGame();
 
-function setupTheGame(userChosenAnswer){
-	listOfColors.push("green");
-	listOfColors.push("red");
-	listOfColors.push("yellow");
-	listOfColors.push("blue");
-	userAtemptCount = 0;
-	makeRandomNumberList();
-	gameChosenColor = listOfColors[getARandomNumber()];
-	displayColors();
+startGame();
+
+function startGame(){
+	
+	let min = 0;
+	let max = 8;
+	let numberOfQuestions = 4;
+	let indexToStartSelecting = 0;
+	
+	let questionCount = 0;
+	let listOfColors = ["Green", "Red", "Yellow", "Blue","Aquamarine","Azure", "Beige,", "Bisque"];
+	let gameChosenColorIndexes = getAListOfRandomNumbers(indexToStartSelecting, indexToStartSelecting + numberOfQuestions)	
+	let listOfSelectedColors = chooseTheNextColorsToDisplay(indexToStartSelecting, listOfColors);
+	let gameChosenColor = listOfColors[gameChosenColorIndexes];
+	
+	displayColors(listOfSelectedColors);
+	
+	$("#findMoreColors").click(function() {
+		indexToStartSelecting = indexToStartSelecting + 4;
+		listOfSelectedColors = chooseTheNextColorsToDisplay(indexToStartSelecting, listOfColors);
+		displayColors(listOfSelectedColors);
+	});
+
+	//this checks if the colors were clicked
+	for (let index = 0; index < 4; index++) {
+		$("#block-"+index).click(function(){
+			let answer = listOfSelectedColors[index];
+			checkTheAnswer(gameChosenColor, answer);
+		});
+	}
+
 	$("#theQuestion").html("Which of the above colours is: " + gameChosenColor + "?")
 }
 
-$('#replay').click(function() {
-    location.reload();
-});
-
-function displayColors(userChosenAnswer){
-	for (let index = 0; index < randomNumberForBlock.length; index++) {
+function displayColors(listOfSelectedColors){
+	for (let index = 0; index < 4; index++) {
 		$("#block-" + index).css({
-			"background-color": listOfColors[randomNumberForBlock[index]]
+			"background-color": listOfSelectedColors[index]
 		});
 	}
 }
 
-for (let index = 0; index < randomNumberForBlock.length; index++) {
-	$("#block-"+index).click(function(){
-		let answer = listOfColors[randomNumberForBlock[index]];
-		checkTheAnswer(answer);
-	});
-}
-
-function checkTheAnswer(userChosenAnswer){
-	if (userFoundTheColor == false) {
-		if(userChosenAnswer == gameChosenColor) {
-			$("#theAnswer").html("Yes! that is correct!");
-			userFoundTheColor = true;
-		} else {
-			checkNumberOfUserAttemptsAndDisplay();
-		}
-	}
-}
-
-function checkNumberOfUserAttemptsAndDisplay(){
-	if (userAtemptCount > 0){
-		$("#theAnswer").html( userAtemptCount + " No, unfortunately you are wrong.");
+function checkTheAnswer(gameChosenColor, userChosenAnswer){
+	if(userChosenAnswer == gameChosenColor) {
+		$("#theAnswer").html("Yes! that is correct!");
+		userFoundTheColor = true;
 	} else {
 		$("#theAnswer").html("No, unfortunately you are wrong.");
 	}
-	userAtemptCount++;
 }
 
-function makeRandomNumberList(){
+function getAListOfRandomNumbers(min, max){
 	//Return a random number between min and max:
-	let min = 0;
-	let max = 4;
 	let randoms = [];
+	let randomNumbers = [];
 
-	while(randomNumberForBlock.length < max){
+	while(randomNumbers.length < max){
 		var randomnumber = Math.floor(Math.random()*max) + min;
-		if(randomNumberForBlock.indexOf(randomnumber) > -1) continue;
-		randomNumberForBlock[randomNumberForBlock.length] = randomnumber;
+		if(randomNumbers.indexOf(randomnumber) > -1) continue;
+		randomNumbers[randomNumbers.length] = randomnumber;
 	}
+
+	return randomNumbers;
 	//document.write(randomNumberForBlock);
 }
 
@@ -76,4 +71,12 @@ function getARandomNumber(){
 	let max = 4;
 	var randomNumber = Math.floor(Math.random()*max) + min;
 	return randomNumber;
+}
+
+function chooseTheNextColorsToDisplay(indexToStartSelecting, listOfColors){
+	let chosenColors = [];
+	for (let index = 0; index < 4; index++) {
+		chosenColors[index] = listOfColors[indexToStartSelecting + index];
+	}
+	return chosenColors;
 }
