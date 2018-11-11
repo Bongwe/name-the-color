@@ -1,10 +1,23 @@
-
+let listOfAllColors = ["Green", "Red", "Silver", "Blue",
+"Aquamarine","Azure", "Purple", "Bisque",
+"Brown", "Burly Wood", "Cadet Blue", "Chartreuse", 
+"Gainsboro", "Ghost White", "Gold", "Goldenrod",
+"Honeydew", "Hot Pink", "Indian Red", "Indigo",
+"Ivory", "Khaki", "Lavender", "Lavender Blush",
+"Medium Turquoise", "Medium Violet Red", "Midnight Blue", "Mint Cream",
+"Misty Rose", "Navajo White", "Navy", "Old Lace"];
 
 let min = 0;
 let max = 4;
 let indexOfNextColor = 0;
 let numberOfColors = 4;
-let listOfAllColors = ["Green", "Red", "Silver", "Blue","Aquamarine","Azure", "Purple", "Bisque"];
+
+/*
+two places where this is changes
+when we assing blocks colors
+and when we select the name of the block and get the color
+ */
+let colorsSelectedRandomly = getAListOfRandomNumbers(min, max); 
 
 playGame();
 
@@ -18,8 +31,27 @@ function playGame() {
 }
 
 $("#findMoreColors").click(function(){
-	playGame();
+	if (indexOfNextColor < listOfAllColors.length) {
+		removeInfoMessages();
+		playGame();
+	} else {
+		$("#findMoreColors").css({
+			"background-color": "grey"
+		});
+	}
 });
+
+$("#refresh").click(function(){
+	location.reload();
+});
+
+function removeInfoMessages(){
+	$("#theAnswer").html("");
+}
+
+function removeInfoMessages(){
+	$("#theAnswer").html("");
+}
 
 function chooseTheNextColorsToDisplay(indexOfNextColor, numberOfColors, listOfAllColors) {
 	let chosenColors = [];
@@ -31,16 +63,19 @@ function chooseTheNextColorsToDisplay(indexOfNextColor, numberOfColors, listOfAl
 
 function displayColors(listOfColors, numberOfColors){
 	for (let index = 0; index < numberOfColors; index++) {
+		let myColor = colorsSelectedRandomly[index];
 		$("#block-" + index).css({
-			"background-color": listOfColors[index]
+			"background-color": listOfColors[myColor]
 		});
+		//$("#block-" + index).html(listOfColors[index]);
 	}
 }
 
 function doWhenColorIsClicked(listOfColors, numberOfColors,gameChosenColor ){
 	for (let index = 0; index < numberOfColors; index++) {
+		let myColor = colorsSelectedRandomly[index];
 		$("#block-"+index).click(function(){
-			let answer = listOfColors[index];
+			let answer = listOfColors[myColor];
 			checkTheAnswer(gameChosenColor, answer);
 		});
 	}

@@ -24,30 +24,14 @@ body{
 	background-color: green;
 }
 
+#refresh {
+	background-color: orange;
+}
+
 #theAnswer {
 	width: 200;
 	height: 50px;
 }
-/* #block-1{
-	background-color:green;
-	color: green; 
-}
- 
-#block-2{
-	background-color:yellow;
-	color: yellow;
-}
- 
-#block-3{
-	background-color:pink;
-	color: pink;
-}
- 
-#block-4{
-	background-color:blue;
-	color: blue;
-}*/
-	 
 
 
 
