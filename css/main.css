@@ -21,11 +21,25 @@ body{
 }
 
 #findMoreColors {
-	background-color: green;
+	background-color: #00CC95;
 }
 
 #refresh {
-	background-color: orange;
+	background-color: #FF00FF;
+}
+
+#about {
+	background-color: yellow;
+	color:white;
+}
+
+#about-text  {
+	font-size: 30px;
+}
+
+#backToTheColor {
+	background-color: #FFF900;
+	color:white;
 }
 
 #theAnswer {
